@@ -37,7 +37,7 @@ class Player
 end
 
 class Board
-  attr_reader :magic_number
+  attr_reader :magic_number, :interface_board
 
   def initialize
     @magic_number = 111
