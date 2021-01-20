@@ -1,6 +1,7 @@
 #spec/calculator_spec.rb
 require './lib/game_logic'
-
+game = Game.new
+player = game.register_player("george")
 describe Board do
   board = Board.new
   describe "#cell" do
@@ -114,7 +115,11 @@ describe Board do
 end
 
 describe Player do
-
+  describe "#update_player_board" do
+    it "returns updated player board" do
+      expect(player.update_player_board(0, 0, 1)).to eql(101)
+    end
+  end
 end
 
 describe Game do
