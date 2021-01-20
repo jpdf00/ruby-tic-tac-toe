@@ -81,6 +81,36 @@ describe Board do
       expect(board1.interface_board).to eql([%w[X X X], %w[X X X], %w[X X X]])
     end
   end
+  
+  describe "#calculate_index" do
+    it 'returns the position on the board in form of index' do
+      expect(board.calculate_index(1)).to eql([0, 0])
+    end
+    it 'returns the position on the board in form of index' do
+      expect(board.calculate_index(2)).to eql([0, 1])
+    end
+    it 'returns the position on the board in form of index' do
+      expect(board.calculate_index(3)).to eql([0, 2])
+    end
+    it 'returns the position on the board in form of index' do
+      expect(board.calculate_index(4)).to eql([1, 0])
+    end
+    it 'returns the position on the board in form of index' do
+      expect(board.calculate_index(5)).to eql([1, 1])
+    end
+    it 'returns the position on the board in form of index' do
+      expect(board.calculate_index(6)).to eql([1, 2])
+    end
+    it 'returns the position on the board in form of index' do
+      expect(board.calculate_index(7)).to eql([2, 0])
+    end
+    it 'returns the position on the board in form of index' do
+      expect(board.calculate_index(8)).to eql([2, 1])
+    end
+    it 'returns the position on the board in form of index' do
+      expect(board.calculate_index(9)).to eql([2, 2])
+    end
+  end
 end
 
 describe Player do
