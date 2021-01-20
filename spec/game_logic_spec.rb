@@ -134,5 +134,16 @@ describe Player do
 end
 
 describe Game do
+  describe "#register_player" do
+    it "check that the method works" do
+      expect(game.register_player("george")).to be_nil
+    end
+  end
+
+  describe "#last_registered_player" do
+    it "returns the last registered the player" do
+      expect(game.last_registered_player.name).to eql("george")
+    end
+  end
 
 end
