@@ -39,6 +39,12 @@ or
 
 - Ruby
 
+### Run tests
+
+- Open your terminal.
+- From Inside the terminal, go to the "tic-tac-toe" directory you cloned.
+- Type rspec.
+
 ## Authors
 
 👤 **Author1**

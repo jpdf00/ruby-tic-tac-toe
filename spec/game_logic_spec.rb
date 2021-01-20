@@ -1,5 +1,5 @@
 #spec/calculator_spec.rb
-require './lib/game_logic'
+require_relative '../lib/game_logic'
 
 game = Game.new
 player = game.register_player("george")
@@ -35,6 +35,9 @@ describe Board do
     it "returns the cell number based on the index 2, 2" do
       expect(board.cell(2, 2)).to eql(7)
     end
+    it "Raise error with wrong index" do
+      expect {board.cell(5, 4)}.to raise_error StandardError
+    end
   end
 
   describe "#printable_board"do
@@ -43,6 +46,9 @@ describe Board do
     end
     it "Returns diferent object as board.interface_board" do
       expect(board.printable_board).not_to equal(board.interface_board)
+    end
+    it "Does not return nil" do
+      expect(board.printable_board).not_to be_nil
     end
   end
 
@@ -84,6 +90,9 @@ describe Board do
       board1.update_board(2, 2, "X")
       expect(board1.interface_board).to eql([%w[X X X], %w[X X X], %w[X X X]])
     end
+    it "Raise error with wrong index" do
+      expect {board1.update_board(5, 4, "X")}.to raise_error StandardError
+    end
   end
 
   describe "#calculate_index" do
@@ -114,6 +123,9 @@ describe Board do
     it 'returns the position on the board in form of index' do
       expect(board.calculate_index(9)).to eql([2, 2])
     end
+    it "Raise error with wrong input" do
+      expect {board.calculate_index(10)}.to raise_error StandardError
+    end
   end
 end
 
@@ -122,13 +134,22 @@ describe Player do
     it "returns updated player board" do
       expect(player.update_player_board(0, 0, 67)).to eql(6767)
     end
+    it "Raise error with wrong index" do
+      expect {player.update_player_board(5, 4, "X")}.to raise_error StandardError
+    end
   end
 
   describe "#winner?" do
-    it "determines a winning situation" do
+    it "Returns that the current player won" do
       player.update_player_board(0, 1, 1)
       player.update_player_board(0, 2, 43)
       expect(player.winner?(board.magic_number)).to eql(true)
+    end
+    it "returns that no player won" do
+      player.update_player_board(0, 0, 0)
+      player.update_player_board(0, 1, 0)
+      player.update_player_board(0, 2, 0)
+      expect(player.winner?(board.magic_number)).to eql(false)
     end
   end
 end
@@ -138,11 +159,17 @@ describe Game do
     it "check that the method works" do
       expect(game.register_player("george")).to be_nil
     end
+    it "Raise error without an argument" do
+      expect {game.register_player}.to raise_error StandardError
+    end
   end
 
   describe "#last_registered_player" do
     it "returns the last registered the player" do
       expect(game.last_registered_player.name).to eql("george")
+    end
+    it "Does not return a non registered the player" do
+      expect(game.last_registered_player.name).not_to eql("JP")
     end
   end
 
@@ -150,11 +177,24 @@ describe Game do
     it "returns the printable board" do
       expect(game.board).to eql(board.interface_board)
     end
+
+    it "does not return nil" do
+      expect(game.board).not_to be_nil
+    end
   end
 
   describe "#execute_turn" do
-    it "execute the turn" do
-      expect(game.execute_turn(1)).to eql(true)
+    it "Return true when a player wins" do
+      player.update_player_board(0, 0, 67)
+      player.update_player_board(0, 1, 1)
+      player.update_player_board(0, 2, 43)
+      expect(game.execute_turn(3)).to eql(true)
+    end
+    it "Return false when no player won" do
+      player.update_player_board(0, 0, 0)
+      player.update_player_board(0, 1, 0)
+      player.update_player_board(0, 2, 0)
+      expect(game.execute_turn(1)).to eql(false)
     end
   end
 end
