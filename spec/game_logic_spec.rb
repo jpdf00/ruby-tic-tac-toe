@@ -1,9 +1,12 @@
 #spec/calculator_spec.rb
 require './lib/game_logic'
+
 game = Game.new
 player = game.register_player("george")
+board = Board.new
+
+
 describe Board do
-  board = Board.new
   describe "#cell" do
     it "returns the cell number based on the index 0, 0" do
       expect(board.cell(0, 0)).to eql(67)
@@ -117,7 +120,15 @@ end
 describe Player do
   describe "#update_player_board" do
     it "returns updated player board" do
-      expect(player.update_player_board(0, 0, 1)).to eql(101)
+      expect(player.update_player_board(0, 0, 67)).to eql(6767)
+    end
+  end
+
+  describe "#winner?" do
+    it "determines a winning situation" do
+      player.update_player_board(0, 1, 1)
+      player.update_player_board(0, 2, 43)
+      expect(player.winner?(board.magic_number)).to eql(true)
     end
   end
 end
