@@ -85,7 +85,7 @@ describe Board do
       expect(board1.interface_board).to eql([%w[X X X], %w[X X X], %w[X X X]])
     end
   end
-  
+
   describe "#calculate_index" do
     it 'returns the position on the board in form of index' do
       expect(board.calculate_index(1)).to eql([0, 0])
@@ -146,4 +146,15 @@ describe Game do
     end
   end
 
+  describe "#board" do
+    it "returns the printable board" do
+      expect(game.board).to eql(board.interface_board)
+    end
+  end
+
+  describe "#execute_turn" do
+    it "execute the turn" do
+      expect(game.execute_turn(1)).to eql(true)
+    end
+  end
 end
